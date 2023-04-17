@@ -11,7 +11,7 @@ variable "create_rs" {
 variable "create_rs_random_password" {
   description = "Determines whether to create random password for cluster `master_password`"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "tags" {
@@ -93,7 +93,7 @@ variable "cluster_version" {
 variable "database_name" {
   description = "The name of the first database to be created when the cluster is created. If you do not provide a name, Amazon Redshift will create a default database called `dev`"
   type        = string
-  default     = "demodatabase"
+  default     = "demorsdb"
 }
 
 # default_iam_role_arn -> see iam roles section
@@ -157,15 +157,10 @@ variable "manual_snapshot_retention_period" {
 variable "master_password" {
   description = "Password for the master DB user. (Required unless a `snapshot_identifier` is provided). Must contain at least 8 chars, one uppercase letter, one lowercase letter, and one number"
   type        = string
-  default     = null
+  default     = "Password1234"
   sensitive   = true
 }
 
-variable "create_random_password" {
-  description = "Determines whether to create random password for cluster `master_password`"
-  type        = bool
-  default     = true
-}
 
 variable "random_password_length" {
   description = "Length of random password to create. Defaults to `16`"
@@ -303,7 +298,7 @@ variable "parameter_group_tags" {
 variable "create_rs_subnet_group" {
   description = "Determines whether to create a subnet group or use existing"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "rs_subnet_group_name" {
@@ -329,3 +324,29 @@ variable "subnet_group_tags" {
   type        = map(string)
   default     = {}
 }
+# variable "redshift_cluster_id" {
+#   type = string
+# }
+
+# variable "redshift_database_name" {
+#   type = string
+# }
+
+# variable "redshift_database_user" {
+#   type = string
+# }
+
+# variable "redshift_database_password" {
+#   type = string
+# }
+
+# variable "table_name" {
+#   type = string
+# }
+
+# variable "table_columns" {
+#   type = list(object({
+#     name = string
+#     type = string
+#   }))
+# }

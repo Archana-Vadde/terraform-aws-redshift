@@ -61,7 +61,7 @@ resource "aws_redshift_cluster" "this" {
 #Try is an "if/else". Basically only two outcomes. Coalesce can use multiple conditions and will grab the first not-empty result. 
   maintenance_track_name           = var.maintenance_track_name
   manual_snapshot_retention_period = var.manual_snapshot_retention_period
-  master_password                  = var.create_random_password ? random_password.master_password[0].result : var.master_password
+  master_password                  = var.create_rs_random_password ? random_password.master_password[0].result : var.master_password
   master_username                  = var.master_username
   node_type                        = var.node_type
   number_of_nodes                  = var.number_of_nodes
@@ -146,3 +146,30 @@ resource "aws_redshift_subnet_group" "this" {
 
   tags = merge(var.tags, var.subnet_group_tags)
 }
+#####################################################
+# resource "aws_redshift_table" "example" {
+#   cluster_identifier = var.redshift_cluster_id
+#   database_name      = var.redshift_database_name
+#   schema_name        = "public"
+#   table_name         = var.table_name
+#   column {
+#     name = "id"
+#     type = "integer"
+#   }
+#   dynamic "column" {
+#     for_each = var.table_columns
+#     content {
+#       name = column.value.name
+#       type = column.value.type
+#     }
+#   }
+#   depends_on = [aws_redshift_cluster.this]
+# }
+
+# resource "aws_redshift_user" "example" {
+#   username        = var.username
+#   password        = var.password
+#   cluster_identifier = "${var.environment}-${var.cluster_identifier}"
+#   depends_on      = [aws_redshift_cluster.this]
+# }
+
