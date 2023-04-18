@@ -1,7 +1,7 @@
 variable "region" {
   description = "name of the region"
   type = string
-  default = "eu-west-1"
+  default = "us-east-1"
 }
 variable "create_rs" {
   description = "Determines whether to create Redshift cluster and resources (affects all resources)"
@@ -226,7 +226,7 @@ variable "snapshot_identifier" {
 variable "vpc_security_group_ids" {
   description = "A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster"
   type        = list(string)
-  default     = ["sg-005be9d93983e0c53"]
+  default     = ["sg-06891948958f6c334"]
 }
 
 variable "cluster_timeouts" {
@@ -298,7 +298,7 @@ variable "parameter_group_tags" {
 variable "create_rs_subnet_group" {
   description = "Determines whether to create a subnet group or use existing"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "rs_subnet_group_name" {
@@ -316,7 +316,7 @@ variable "subnet_group_description" {
 variable "subnet_ids" {
   description = "An array of VPC subnet IDs to use in the subnet group"
   type        = list(string)
-  default     = ["subnet-0a7411c374b59b404", "subnet-00b72fd7344088c8b"]
+  default     = ["subnet-0f90400fc4c23f668", "subnet-0f17b42f2d2cc2013"]
 }
 
 variable "subnet_group_tags" {
@@ -324,17 +324,8 @@ variable "subnet_group_tags" {
   type        = map(string)
   default     = {}
 }
-# variable "redshift_cluster_id" {
-#   type = string
-# }
 
-# variable "redshift_database_name" {
-#   type = string
-# }
 
-# variable "redshift_database_user" {
-#   type = string
-# }
 
 # variable "redshift_database_password" {
 #   type = string
@@ -342,6 +333,7 @@ variable "subnet_group_tags" {
 
 # variable "table_name" {
 #   type = string
+#   default = "demo-table"
 # }
 
 # variable "table_columns" {

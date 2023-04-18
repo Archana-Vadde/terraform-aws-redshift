@@ -147,9 +147,44 @@ resource "aws_redshift_subnet_group" "this" {
   tags = merge(var.tags, var.subnet_group_tags)
 }
 #####################################################
+resource "redshift_user" "owner" {
+  name = "owner"
+}
+
+# Internal schema
+resource "redshift_schema" "schema" {
+  name  = "my_schema"
+  owner = redshift_user.owner.name
+  quota = 150
+}
+
+# External schema using AWS Glue Data Catalog
+# resource "redshift_schema" "external_from_glue_data_catalog" {
+#   name = "spectrum_schema"
+#   owner = redshift_user.owner.name
+#   external_schema {
+#     database_name = "dev-demodatabase" # Required. Name of the db in glue catalog
+#     data_catalog_source {
+#       region = "us-east-1" # Optional. If not specified, Redshift will use the same region as the cluster.
+#       iam_role_arns = [
+#         # Required. Must be at least 1 ARN and not more than 10.
+#         "arn:aws:iam::859662211748:role/glue-role",
+        
+#       ]
+#       catalog_role_arns = [
+#         # Optional. If specified, must be at least 1 ARN and not more than 10.
+#         # If not specified, Redshift will use iam_role_arns for accessing the glue data catalog.
+#         "arn:aws:iam::859662211748:role/glue-role",
+#         # ...
+#       ]
+#       #create_external_database_if_not_exists = true # Optional. Defaults to false.
+#     }
+#   }
+# }
+
 # resource "aws_redshift_table" "example" {
-#   cluster_identifier = var.redshift_cluster_id
-#   database_name      = var.redshift_database_name
+#   cluster_identifier = aws_redshift_cluster.this[0].id
+#   database_name      = var.database_name
 #   schema_name        = "public"
 #   table_name         = var.table_name
 #   column {
